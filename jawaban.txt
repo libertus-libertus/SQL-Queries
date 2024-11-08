@@ -1,0 +1,72 @@
+1.  Buatlah database dengan nama “myshop”.
+    CREATE DATABASE myshop;
+
+2.  Buatlah tabel baru di dalam database myshop sesuai dengan perintah create table.
+    
+    a. Tabel users
+    CREATE TABLE users (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255),
+        email VARCHAR(255),
+        password VARCHAR(255)
+    );
+
+    b. Tabel categories
+    CREATE TABLE categories (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255)
+    );
+
+    c. Tabel items (Membuat tabel items dengan foreign key yang terhubung ke tabel categories)
+    CREATE TABLE items (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        name VARCHAR(255),
+        description VARCHAR(255),
+        price INT,
+        stock INT,
+        category_id INT,
+        FOREIGN KEY (category_id) REFERENCES categories(id)
+    );
+
+3.  Masukkanlah data - data ke masing-masing tabel dmenggunakan perintah SQL “INSERT INTO”.
+    
+    a. INSERT INTO data ke dalam tabel users
+    INSERT INTO users (name, email, password) VALUES
+    ('John Doe', 'john@doe.com', 'john123'),
+    ('Jane Doe', 'jane@doe.com', 'jenita123');
+
+    b. INSERT INTO data ke dalam tabel categories
+    INSERT INTO categories (name) VALUES
+    ('gadget'),
+    ('cloth'),
+    ('men'),
+    ('women'),
+    ('branded');
+
+    c. INSERT INTO data ke dalam tabel items
+    INSERT INTO items (name, description, price, stock, category_id) VALUES
+    ('Sumsang b50', 'hape keren dari merek sumsang', 4000000, 100, 1),
+    ('Uniklooh', 'baju keren dari brand ternama', 500000, 50, 2),
+    ('IMHO Watch', 'jam tangan anak yang jujur banget', 2000000, 10, 1);
+
+4.  Mengambil Data dari Database
+
+    a.  Mengambil seluruh data di tabel user kecuali field password
+    SELECT id, email, name FROM users;
+
+    b.  Mengambil data items:
+        -> Buatlah sebuah query untuk mendapatkan data item pada table items yang memiliki harga di atas 1000000 (satu juta).
+        SELECT * FROM items WHERE price > 1000000;
+
+        -> Buat sebuah query untuk mengambil data item pada table items yang memiliki name serupa atau mirip (like) 
+           dengan kata kunci “uniklo”, “watch”, atau “sang” (pilih salah satu saja).
+        SELECT * FROM items WHERE name LIKE '%uniklo%';
+        SELECT * FROM items WHERE name LIKE '%“watch”%';
+        SELECT * FROM items WHERE name LIKE '%“sang”%';
+    
+    c.  Buatlah sebuah query untuk menampilkan data items yang dilengkapi dengan data nama kategori di masing-masing items 
+        (gunakan join). 
+    SELECT items.name, items.description, items.price, items.stock, items.category_id, categories.name AS kategori FROM items INNER JOIN categories ON items.category_id = categories.id;
+
+5.  Mengubah data pada table items untuk item dengan nama sumsang b50 harganya (price) menjadi 2500000. 
+    UPDATE items SET price = 2500000 WHERE name = 'Sumsang b50';
